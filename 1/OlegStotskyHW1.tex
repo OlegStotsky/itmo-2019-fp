@@ -13,6 +13,14 @@
 \frenchspacing
 \pagestyle{empty}
 
+\begin{tabbing}
+\hspace{11cm} \= Студент: \= Стоцкий Олег \\
+  \> Группа: \> М4140 \\
+  \> Дата: \> \today
+\end{tabbing}
+\hrule
+\vspace{1cm}
+
 \begin{center}
 Домашняя работа №1
 \end{center}
@@ -108,7 +116,7 @@ $$ K_* $$
 $$ fls $$
 
 \paragraph{7} Напишите функцию $\textbf{or}(b_1, b_2)$. \\
-Решение: $ \lambda b1b2. b1\ tru \ b2 $
+Решение: $$ \lambda b1b2. b1\ tru \ b2 $$
 
 Напишите лямбда-термы:
   \paragraph{8} Функцию $\mathbf{mult}(a, b)$, перемножающую два числа Чёрча. \\
@@ -127,7 +135,7 @@ $$ fls $$
     короткое решение. \\
     Решение:
     Введем вспомогательную функцию $ not := \lambda x. x\ fls\ tru $. Тогда  
-    $$ iseven := \lambda n. n\ (\lambda x. not\  x)\ tru $$
+    $$ iseven := \lambda n. n\ not\ tru $$
   \paragraph{12} Функцию $\mathbf{xor}(b_1, b_2)$.\\
   Решение:
  $$ xor := \lambda a\ b. and\ (or\ a\ b)\ (not\ (and\ a\ b)) $$
