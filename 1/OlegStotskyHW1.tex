@@ -1,0 +1,146 @@
+\documentclass[12pt, a4paper] {article} 
+\usepackage[utf8] {inputenc} 
+\usepackage[T2A]{fontenc} 
+\usepackage[english, russian] {babel} 
+\usepackage[usenames,dvipsnames]{xcolor} 
+\usepackage{listings,longtable,amsmath,amsfonts,graphicx,tikz,amssymb} 
+\usepackage{indentfirst,verbatim} 
+\usepackage[top=30pt,bottom=30pt,left=48pt,right=46pt]{geometry} 
+
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small}}{}
+
+\begin{document}
+\frenchspacing
+\pagestyle{empty}
+
+\begin{center}
+Домашняя работа №1
+\end{center}
+
+Осуществите подстановку и приведите к нормальной форме~--- форме, в которой не
+осталось редексов,~--- указывая при этом основные шаги:
+
+\paragraph{1} $x := \mathbf{K}$ и $y := \mathbf{B}$ в
+    $y~(\lambda z.~x~x~(x~z~x))~(\lambda x.~x~x~x)~\mathbf{I}$\\
+Решение:
+    		$$y~(\lambda z.~x~x~(x~z~x))~(\lambda x.~x~x~x)~\mathbf{I} [x := \mathbf{K}, y := \mathbf{B}]$$
+		$$B(\lambda z. KK(KzK))(\lambda x.xxx)I $$
+        $$ (\lambda z.KK(KzK))((\lambda x.xxx)I)$$
+        $$ (\lambda z.KK(KzK))(III) $$
+        $$ (\lambda z.KK(KzK))I $$
+        $$ KK(KIK) $$
+        $$ KKI $$
+        $$ K $$
+\paragraph{2}$x := \mathbf{S}$ в
+    $x~(\lambda z~x.~z~x)~(\lambda z~y~x.~x)~x$ \\
+Решение:
+   $$x~(\lambda z~x.~z~x)~(\lambda z~y~x.~x)x [x := S]$$
+   $$ S(\lambda zx.zx)(\lambda zyx.x)S $$
+   $$ (\lambda zx.zx) S ((\lambda zyx.x) S) $$
+   $$ (\lambda zx.zx) S (\lambda yx.x)  $$
+   $$ S K_* $$
+   $$ (\lambda fgx. f x (g x))(\lambda yx.x) $$
+   $$ \lambda gx. K_* x (g x) $$
+   $$ \lambda gx. gx $$
+   
+
+Приведите к нормальной форме, указывая основные шаги:
+
+\paragraph{3}$(\lambda x~x~x .~x)~\mathbf{I}~\mathbf{K}~\mathbf{S}$ \\
+Решение:
+	$$ (\lambda x.\lambda x. \lambda x.x) I K S $$
+	$$ (\lambda x. \lambda x.x) K S $$
+	$$ (\lambda x. x) S $$
+	$$ S $$
+
+\paragraph{4} $(\lambda x~y~z .~y~x~z)~(y~x)~(\lambda x .~x~x)~f$ \\
+Решение:
+	$$ (\lambda y' z. y' (yx) z)(lambda x. x x) f $$
+	$$ (\lambda z. (\lambda x. xx) (y x) z) f $$
+	$$ (y x) (y x) f $$
+
+\paragraph{5} $\mathbf{I}~\mathbf{S}~\mathbf{K}~\mathbf{S}~\mathbf{K}~\mathbf{S}~(
+    \mathbf{S}~\mathbf{K}~\mathbf{K}~\mathbf{K})$ \\
+Решение:
+ 	$$ ISKSKS(SKKK) $$
+ 	$$ SKSKS(SKKK) $$
+ 	$$ (\lambda x.K x (S x))KS(SKKK) $$
+ 	$$ KS(SKKK) $$
+ 	$$ KS(KK(KK)) $$
+ 	$$ KSK $$
+ 	$$ S $$
+ 	
+    
+Введём булевы значения:
+$$\begin{aligned}
+\mathbf{tru} &:= \mathbf{K} \\
+\mathbf{fls} &:= \mathbf{K_\ast} \\
+\mathbf{not} &:= \lambda b.~b~\mathbf{fls}~\mathbf{tru} \\
+\mathbf{and} &:= \lambda b_1~b_2.~b_1~b_2~\mathbf{fls} \\
+\end{aligned}$$
+
+\paragraph{6} Убедитесь, что \textbf{and} работает как надо: покажите, что если ему подавать аргументы \textbf{tru} и \textbf{fls}, будут получаться логически правильные результаты. \\
+Решение: \\
+ Проверим , что $ and\  tru\ fls = fls $
+ $$ (\lambda b1b2. b1 b2 fls) tru\ fls $$
+ $$ tru\ fls\ fls $$
+ $$ K K_* K_* $$
+ $$ K_* $$
+ $$ fls $$
+ Верно. \\
+ Проверим, что $and\ tru\ tru = tru $
+ $$ (\lambda b1b2. b1\ b2\ fls) K K $$
+ $$ K K K_* $$
+ $$ K $$
+ $$ tru $$
+Верно. \\
+Проверим, что $ and\ fls\ fls = fls $
+$$ (\lambda b1b2.\lambda b1\ b2\ K_*)K_* K_* $$
+$$ K_* K_* K_* $$
+$$ K_* $$
+$$ fls $$
+Верно. \\
+Проверим, что $and\ fls\ tru = fls$
+$$ (\lambda b1b2. b1\ b2\ fls)fls\ tru $$
+$$ (\lambda b1b2. b1\ b2\ K_*)K_* K $$
+$$ K_* K K_* $$
+$$ K_* $$
+$$ fls $$
+
+\paragraph{7} Напишите функцию $\textbf{or}(b_1, b_2)$. \\
+Решение: $ \lambda b1b2. b1\ tru \ b2 $
+
+Напишите лямбда-термы:
+  \paragraph{8} Функцию $\mathbf{mult}(a, b)$, перемножающую два числа Чёрча. \\
+  Решение: 
+  $$ mul := \lambda n1 n2. \lambda sz. n1\ (\lambda z'. add\ n2\ z'\ s\ z)\ 0 $$
+  \paragraph{9} Функцию $\mathbf{iszero}(a)$, которая возвращает $\textbf{tru}$, если
+    ей подать $\mathbf{0}$, и $\textbf{fls}$ в противном случае. \\
+   Решение:
+   $$ iszero := \lambda n. n (\lambda x.fls)\ tru  $$
+  \paragraph{10} Функцию $\mathbf{pow}(a, b)$, которая вычисляет $a^b$, где $a$ и $b$~---
+    числа Чёрча.\\
+    Решение:
+    $$ \lambda n1n2. \lambda sz. n2\ (\lambda z'. mul\ z'\ n1) 1   $$
+  \paragraph{11} Функцию $\mathbf{iseven}(n)$, которая возвращает \textbf{tru}, если
+    $n$~--- чётное число Чёрча, и \textbf{fls} в противном случае. Существует
+    короткое решение. \\
+    Решение:
+    Введем вспомогательную функцию $ not := \lambda x. x\ fls\ tru $. Тогда  
+    $$ iseven := \lambda n. n\ (\lambda x. not\  x)\ tru $$
+  \paragraph{12} Функцию $\mathbf{xor}(b_1, b_2)$.\\
+  Решение:
+ $$ xor := \lambda a\ b. and\ (or\ a\ b)\ (not\ (and\ a\ b)) $$
+  \paragraph{13} Функцию $\mathbf{pred}(n)$, которая находит предыдущее число Чёрча.
+    Подсказка:
+\begin{lstlisting}[language=Python]
+def pred(n):
+  prd = 0
+  cur = 0
+  for i in range(0, n):
+    prd = cur
+    cur = cur + 1
+  return prd
+\end{lstlisting}
+
+\end{document}
