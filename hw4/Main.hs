@@ -1,4 +1,4 @@
-type Church a = (a -> a) -> a 
+type Church a = (a -> a) -> a -> a
 
 prev :: Church a -> Church a
 prev n = fst (n (\p -> pair (snd p) (plus one (snd p))) (pair zero zero))
