@@ -23,8 +23,8 @@ oddPlus x y | (not $ even x) && (not $ even y) = x + y
 
 infixl 6 +??? 
 a +??? b | a > 0 = succ ((pred a) +??? b)
-a +??? b | a < 0 = pred ((succ a) +??? b)
-a +??? b | a == 0 = b
+         | a < 0 = pred ((succ a) +??? b)
+         | a == 0 = b
 
 collatz :: Integer -> Integer
 collatz n 
@@ -32,13 +32,11 @@ collatz n
         | even n = collatz (div n 2)
         | otherwise = collatz (3*n + 1)
       
-
 myhof :: (a -> b) -> (a -> c) -> a -> (b, c)
 myhof f g x = (f x, g x)
 
--- strangePlus :: Integer -> Integer -> Integer
--- strangePlus a b
---     | b == 0 = a
---     | a == 0 = b
---     | b < 0 = strangePlus (pred a) (succ b)
---     | otherwise = succ $ strangePlus a (pred b)
+strangePlus :: Integer -> Integer -> Integer
+strangePlus a b
+    | b == 0 = a
+    | b < 0 = pred $ strangePlus a (succ b)
+    | otherwise = succ $ strangePlus a (pred b)
