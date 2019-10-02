@@ -32,7 +32,7 @@ collatz n
 myhof :: (a -> b) -> (a -> c) -> a -> (b, c)
 myhof f g x = (f x, g x)
 
-strangePlus :: Integer -> Integer -> Integer
+strangePlus :: (Num a1, Ord a1, Enum a2, Enum a1) => a2 -> a1 -> a2
 strangePlus a b
     | b == 0 = a
     | b < 0 = pred $ strangePlus a (succ b)
