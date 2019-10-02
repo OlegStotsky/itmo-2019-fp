@@ -1,6 +1,3 @@
-type Church a = (a -> a) -> a -> a
-
-prev :: Church a -> Church a
 prev n = fst (n (\p -> pair (snd p) (plus one (snd p))) (pair zero zero))
     where 
       k x y = x
@@ -39,4 +36,4 @@ strangePlus :: Integer -> Integer -> Integer
 strangePlus a b
     | b == 0 = a
     | b < 0 = pred $ strangePlus a (succ b)
-    | otherwise = succ $ strangePlus a (pred b)
+    | otherwise = pred $ strangePlus (succ $ succ $ a) (pred b)
