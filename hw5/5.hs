@@ -6,5 +6,5 @@ isFib x = computeFibs 0 1
                                           EQ -> True
                                           GT -> False
 
-countsFibs :: [Integer] -> Integer
-countsFibs l = foldl (\acc val -> if val then acc + 1 else acc) 0 (map isFib l)
+countFibs :: [Integer] -> Integer
+countFibs = fromIntegral . length . filter isFib
