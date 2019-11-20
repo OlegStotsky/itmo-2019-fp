@@ -1,4 +1,5 @@
 import Data.Char
+import Control.Applicative
 
 data Parser a = Parser { runParser :: String -> [(String, a)] }
 
@@ -39,3 +40,8 @@ instance Applicative Parser where
   pure x = Parser $ \xs -> [(xs, x)]
   Parser u <*> Parser v = Parser f where
     f xs = mconcat $ fmap (\(str, f) -> fmap (\x -> fmap f x) (v str)) $ u xs
+
+instance Alternative Parser where
+  empty = Parser $ \xs -> []
+  Parser u <|> Parser v = Parser f where
+    f xs = u xs ++ v xs
