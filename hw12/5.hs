@@ -26,11 +26,3 @@ censorState f st = do
   newS <- get
   put (oldS <> f newS)
   return val
-
-test = do 
-  a <- writerState ("y", "x")
-  tellState "y"
-  tellState "z"
-  ((), w) <- listenState $ tellState "z"
-  censorState (take 1) $ tellState "yy"
-  pure a
