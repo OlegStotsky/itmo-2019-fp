@@ -10,5 +10,10 @@ tail' = do line <- lift $ getLine
            st <- get
            if (length st) > 10 then 
              do put $ dropFirstAndInsertLast line st
+                tail'
            else
-             do return ()
+             do tail'
+
+
+main :: IO ()
+main = evalStateT tail' []
